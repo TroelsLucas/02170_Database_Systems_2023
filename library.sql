@@ -26,21 +26,21 @@ CREATE TABLE Genres (
     GenreID int PRIMARY KEY,
     GenreName varchar(30)
 );
-CREATE TABLE Patreon (
-    PatreonID int PRIMARY KEY,
-    PatreonName varchar(30),
+CREATE TABLE Patrons (
+    PatronID int PRIMARY KEY,
+    PatronName varchar(30),
     ContactInfo varchar(30) NULL,
     FinesOwed int NULL
 );
 CREATE TABLE CheckInOut (
-    PatreonID int,
+    PatronID int,
     CopyID int,
     CheckOutDate date,
     CheckInDate date
 );
 CREATE TABLE Reservations (
     ReservationID int PRIMARY KEY,
-    PatreonID int,
+    PatronID int,
     CopyID int,
     PickUpDate date
 )
