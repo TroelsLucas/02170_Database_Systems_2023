@@ -35,12 +35,13 @@ CREATE TABLE Patreon (
 CREATE TABLE CheckInOut (
     PatreonID int,
     CopyID int,
-    DueDate varchar(30)
+    CheckOutDate date,
+    CheckInDate date
 );
 CREATE TABLE Reservations (
     ReservationID int PRIMARY KEY,
     PatreonID int,
     CopyID int,
-    DuePickUpDate varchar(30)
+    PickUpDate date
 )
 GO
