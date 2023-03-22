@@ -14,24 +14,23 @@ DROP TABLE IF EXISTS Location;
 DROP TABLE IF EXISTS Copy;
 DROP TABLE IF EXISTS CheckInOut;
 
-
 # Table creation! Create Tables with Foreign Keys after the referenced tables are created!
 
 CREATE TABLE Author
 	(AuthorID INT NOT NULL AUTO_INCREMENT, 
-	 AuthorName varchar(30),
+	 Author_Name varchar(30),
      PRIMARY KEY (AuthorID)
 	);
     
 CREATE TABLE Section
 	(SectionID int NOT NULL AUTO_INCREMENT, 
-	 SectionName varchar(30),
+	 Section_Name varchar(30),
      PRIMARY KEY (SectionID)
 	);
     
 CREATE TABLE Genre
 	(GenreID int NOT NULL AUTO_INCREMENT, 
-	 GenreName varchar(30),
+	 Genre_Name varchar(30),
      PRIMARY KEY (GenreID)
 	);
     
@@ -39,8 +38,8 @@ CREATE TABLE Patron
 	(PatronID int NOT NULL AUTO_INCREMENT, 
      Patron_First_Name varchar(30),
      Patron_Last_Name varchar(30),
-     Phone_Number varchar(30),
-	 FinesOwed int NULL,
+     Phone_Number varchar(8) CHECK (varchar LIKE '__ __ __ __'),
+	 Fines_Owed int NULL,
      PRIMARY KEY (PatronID)
 	);
 
@@ -67,36 +66,31 @@ CREATE TABLE Copy
 	(CopyID int NOT NULL AUTO_INCREMENT, 
 	 BookID int,
 	 LocationID int, 
-     IS_Borrowed varchar(30),
+     Is_Borrowed varchar(30),
      PRIMARY KEY (CopyID),
 		FOREIGN KEY(LocationID) REFERENCES Location(LocationID) ON DELETE SET NULL,
         FOREIGN KEY(BookID) REFERENCES Book(BookID) ON DELETE CASCADE
 	);
 
-
-
 CREATE TABLE CheckInOut
 	(CheckInOutID int NOT NULL AUTO_INCREMENT,
 	 PatronID int,
      CopyID int,
-     Check_In_Date date NULL,
-     Check_Out_Date date,
+     Check_In_Date date NULL CHECK (date LIKE '____-__-__'),
+     Check_Out_Date date CHECK ((Check_Out_Date > Check_In_Date) AND (date LIKE '____-__-__')),
      PRIMARY KEY (CheckInOutID),
 		FOREIGN KEY(PatronID) REFERENCES Patron(PatronID) ON DELETE CASCADE,
         FOREIGN KEY(CopyID) REFERENCES Copy(CopyID) ON DELETE CASCADE
 	);
 
-
-
 INSERT Author VALUES
-(NULL,'J.K.Rolling'),
+(NULL,'J.K. Rowling'),
 (NULL,'Katie Mack'),
-(NULL,'J.D.Salinger'),
+(NULL,'J.D. Salinger'),
 (NULL,'Shirley Jackson'),
 (NULL,'William Shakespeare'),
 (NULL,'William Shakespeare'),
 (NULL,'George Orwell');
-
 
 INSERT Genre VALUES
 (NULL,'Fiction'),
@@ -115,7 +109,6 @@ INSERT Section VALUES
 (NULL,'D'),
 (NULL,'D'),
 (NULL,'F');
-
 
 INSERT Patron VALUES
 (NULL,'Alex', 'Jeff', '91 91 92 92', '22'),
@@ -149,16 +142,10 @@ INSERT Copy VALUES
 (NULL,'5','3','Yes'),
 (NULL,'6','1','No');
 
-
-
 INSERT CheckInOut VALUES
 (NULL,'1','1',NULL,'2023-03-19'),
 (NULL,'2','3','2023-03-21','2023-03-10'),
 (NULL,'4','5','2023-03-20','2023-03-01');
-
-
-
-
 
 SELECT * FROM Author;
 SELECT * FROM Genre;
